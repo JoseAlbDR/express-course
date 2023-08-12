@@ -7,3 +7,8 @@ export interface Product {
 }
 
 export type NonIdProduct = Omit<Product, "id">;
+
+export interface People {
+  id: number;
+  name: string;
+}
