@@ -1,11 +1,16 @@
 import express from "express";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const port = 5000;
 
 const app = express();
-
+app.use(express.static("./navbar-app"));
 // app.get
 app.get("/", (req, res) => {
-  res.status(200).send("<h1>Home Page</h1>");
+  res.sendFile(__dirname, "./navbar-app/index.html");
 });
 
 app.get("/about", (req, res) => {
