@@ -6,7 +6,7 @@ app.use(express.json());
 
 const PORT = 3000;
 
-app.use("/products", productsRouter);
+app.use("/api/products", productsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
