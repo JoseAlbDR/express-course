@@ -1,10 +1,10 @@
 import express from "express";
-import { products as productsData } from "../data/data";
-import { Product } from "../types";
-const products: Product[] = productsData as Product[];
+import { getProducts } from "../services/productService";
+
 const router = express.Router();
 
 router.get("/", (_req, res) => {
+  const products = getProducts();
   res.json(products);
 });
 
