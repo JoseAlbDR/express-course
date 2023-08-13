@@ -9,10 +9,15 @@ const getProducts = (): MinimalProduct[] => {
   return minimalProducts;
 };
 
-const getProduct = (id: number): Product | undefined => {
+const getProduct = (id: number): Product => {
   const product: Product | undefined = products.find(
     (product) => product.id === id
   );
+
+  if (!product) {
+    throw { status: 400, message: `Can't find product with id: ${id}` };
+  }
+
   return product;
 };
 
