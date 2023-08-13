@@ -19,6 +19,13 @@ export type ProductParams = {
   };
 };
 
+export type SearchParams = {
+  query: {
+    search?: string;
+    limit?: string;
+  };
+};
+
 export type CustomError = {
   status: number;
   message: string;
