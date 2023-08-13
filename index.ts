@@ -20,6 +20,10 @@ app.use("/api/items", authorize, logger);
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
 app.use(morgan("tiny"));
 
+// static assets
+
+app.use(express.static("./methods-public"));
+
 app.get("/", (_req: Request, res: Response) => {
   res.send("Home");
 });
