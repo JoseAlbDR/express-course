@@ -1,5 +1,5 @@
 import { products as productsData } from "../data/data";
-import { MinimalProduct, Product } from "../interfaces/types";
+import { CustomError, MinimalProduct, Product } from "../interfaces/types";
 const products: Product[] = productsData;
 
 const getProducts = (): MinimalProduct[] => {
@@ -15,7 +15,11 @@ const getProduct = (id: number): Product => {
   );
 
   if (!product) {
-    throw { status: 400, message: `Can't find product with id: ${id}` };
+    const error: CustomError = {
+      status: 400,
+      message: `Can't find product with id: ${id}`,
+    };
+    throw error;
   }
 
   return product;
