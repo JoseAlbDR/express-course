@@ -25,4 +25,10 @@ const getProduct = (req: ProductParams, res: Response) => {
     errorHandler(error, res);
   }
 };
-export default { getProducts, getProduct };
+
+const getReview = (req: Request, res: Response) => {
+  console.log(req.params);
+  res.send("Complex query");
+};
+
+export default { getProducts, getProduct, getReview };
