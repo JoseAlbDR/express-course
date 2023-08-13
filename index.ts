@@ -5,7 +5,8 @@ import notFoundRouter from "./src/routes/notFound";
 import queryRouter from "./src/routes/query";
 import { logger } from "./logger";
 import { authorize } from "./authorize";
-// import { people } from "./src/data/data";
+import { people } from "./src/data/data";
+import { TypedRequestBody } from "./src/types/types";
 // import morgan from "morgan";
 
 const app = express();
@@ -34,6 +35,19 @@ app.post("/login", (req: Request, res: Response) => {
   }
 
   return res.status(401).send("Please provide a credential");
+});
+
+app.get("/api/people", (_req, res) => {
+  res.json({ data: people });
+});
+
+app.post("/api/people", (req: TypedRequestBody<{ name: string }>, _res) => {
+  const { name } = req.body;
+
+  people.push({
+    name,
+    id: Math.max(...people.map((d) => d.id)) + 1,
+  });
 });
 
 app.get("/", (_req: Request, res: Response) => {

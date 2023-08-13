@@ -35,3 +35,7 @@ export interface User {
   name: string;
   id: number;
 }
+
+export interface TypedRequestBody<T> extends Express.Request {
+  body: T;
+}
