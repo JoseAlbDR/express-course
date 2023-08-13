@@ -4,7 +4,7 @@ const products: Product[] = productsData;
 
 const getProducts = (): MinimalProduct[] => {
   const minimalProducts: MinimalProduct[] = products.map(
-    ({ name, image, price }) => ({ name, image, price })
+    ({ id, name, image, price }) => ({ id, name, image, price })
   );
   return minimalProducts;
 };
