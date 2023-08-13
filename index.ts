@@ -5,6 +5,7 @@ import notFoundRouter from "./src/routes/notFound";
 import queryRouter from "./src/routes/query";
 import { logger } from "./logger";
 import { authorize } from "./authorize";
+import morgan from "morgan";
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,8 @@ const PORT = 3000;
 app.use("/api/products", productsRouter);
 app.use("/api/query", queryRouter);
 app.use("/api/items", authorize, logger);
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+app.use(morgan("tiny"));
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("Home");
