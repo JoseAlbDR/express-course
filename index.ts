@@ -15,7 +15,7 @@ const PORT = 3000;
 
 app.use("/api/products", productsRouter);
 app.use("/api/query", queryRouter);
-app.use("/", authorize, logger);
+app.use("/api/items", authorize, logger);
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("Home");
