@@ -10,7 +10,6 @@ import { TypedRequestBody } from "./src/types/types";
 // import morgan from "morgan";
 
 const app = express();
-app.use(express.json());
 
 const PORT = 3000;
 
@@ -23,9 +22,13 @@ app.use("/api/items", authorize, logger);
 // app.use(morgan("tiny"));
 
 // static assets
-
 app.use(express.static("./methods-public"));
+
+// parse form data
 app.use(express.urlencoded({ extended: false }));
+
+// parse json
+app.use(express.json());
 
 app.post("/login", (req: TypedRequestBody<{ name: string }>, res: Response) => {
   const { name } = req.body;
@@ -38,16 +41,26 @@ app.post("/login", (req: TypedRequestBody<{ name: string }>, res: Response) => {
 });
 
 app.get("/api/people", (_req, res) => {
-  res.json({ data: people });
+  res.status(200).send({ data: people });
 });
 
-app.post("/api/people", (req: TypedRequestBody<{ name: string }>, _res) => {
+app.post("/api/people", (req: TypedRequestBody<{ name: string }>, res) => {
   const { name } = req.body;
 
-  people.push({
+  if (!name) {
+    return res
+      .status(400)
+      .send({ success: false, msg: "Please provide a name." });
+  }
+
+  const person = {
     name,
     id: Math.max(...people.map((d) => d.id)) + 1,
-  });
+  };
+
+  people.push(person);
+
+  return res.status(201).json({ success: true, person: name });
 });
 
 app.get("/", (_req: Request, res: Response) => {
