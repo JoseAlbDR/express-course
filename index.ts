@@ -27,8 +27,8 @@ app.use("/api/items", authorize, logger);
 app.use(express.static("./methods-public"));
 app.use(express.urlencoded({ extended: false }));
 
-app.post("/login", (req: Request, res: Response) => {
-  const { name } = req.body as { name: string };
+app.post("/login", (req: TypedRequestBody<{ name: string }>, res: Response) => {
+  const { name } = req.body;
 
   if (name) {
     return res.status(200).send(`Welcome! ${name}`);
