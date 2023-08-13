@@ -1,12 +1,19 @@
-import { NextFunction, Response } from "express";
-import { User } from "./src/interfaces/types";
+import { Request, NextFunction, Response } from "express";
+import { User } from "./src/types/types";
 
-export const authorize = (req: User, res: Response, next: NextFunction) => {
-  const user = req.query.user;
+export interface UserRequest extends Request {
+  user?: User;
+}
+
+export const authorize = (
+  req: UserRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const { user } = req.query;
 
   if (user === "yusep") {
-    req.user = { name: "john", id: 3 };
-
+    req.user = { name: "yusep", id: 3 };
     next();
   } else {
     res.status(401).send("Unauthorized");
