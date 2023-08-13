@@ -6,7 +6,7 @@ export interface Product {
   desc: string;
 }
 
-export type NonIdProduct = Omit<Product, "id">;
+export type MinimalProduct = Omit<Product, "id" | "desc">;
 
 export interface People {
   id: number;
