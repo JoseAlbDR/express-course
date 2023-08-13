@@ -5,7 +5,8 @@ import notFoundRouter from "./src/routes/notFound";
 import queryRouter from "./src/routes/query";
 import { logger } from "./logger";
 import { authorize } from "./authorize";
-import morgan from "morgan";
+// import { people } from "./src/data/data";
+// import morgan from "morgan";
 
 const app = express();
 app.use(express.json());
@@ -18,15 +19,21 @@ app.use("/api/products", productsRouter);
 app.use("/api/query", queryRouter);
 app.use("/api/items", authorize, logger);
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-app.use(morgan("tiny"));
+// app.use(morgan("tiny"));
 
 // static assets
 
 app.use(express.static("./methods-public"));
 app.use(express.urlencoded({ extended: false }));
 
-app.post("/login", (_req: Request, res: Response) => {
-  res.send("POST");
+app.post("/login", (req: Request, res: Response) => {
+  const { name } = req.body as { name: string };
+
+  if (name) {
+    return res.status(200).send(`Welcome! ${name}`);
+  }
+
+  return res.status(401).send("Please provide a credential");
 });
 
 app.get("/", (_req: Request, res: Response) => {
