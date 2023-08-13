@@ -30,3 +30,14 @@ export type CustomError = {
   status: number;
   message: string;
 };
+
+export type User = {
+  user: {
+    name: string;
+    id: number;
+  };
+
+  query: {
+    user?: string;
+  };
+};
