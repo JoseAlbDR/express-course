@@ -23,6 +23,11 @@ app.use(morgan("tiny"));
 // static assets
 
 app.use(express.static("./methods-public"));
+app.use(express.urlencoded({ extended: false }));
+
+app.post("/login", (_req: Request, res: Response) => {
+  res.send("POST");
+});
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("Home");
