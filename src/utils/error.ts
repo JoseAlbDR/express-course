@@ -10,14 +10,9 @@ export const errorHandler = (error: unknown, res: Response) => {
   ) {
     // Check if the error has the properties of a CustomError
     const customError = error as CustomError;
-    res
-      .status(customError.status)
-      .send({ status: "FAILED", data: { error: customError.message } });
-  } else {
-    // Handle other errors here
-    res.status(500).send({
+    res.status(customError?.status || 500).send({
       status: "FAILED",
-      data: { error },
+      data: { error: customError?.message || error },
     });
   }
 };
