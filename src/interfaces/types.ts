@@ -18,3 +18,8 @@ export type ProductParams = {
     productId: string;
   };
 };
+
+export type CustomError = {
+  status: number;
+  message: string;
+};
