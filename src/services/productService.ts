@@ -1,9 +1,12 @@
 import { products as productsData } from "../data/data";
-import { Product } from "../interfaces/types";
+import { MinimalProduct, Product } from "../interfaces/types";
 const products: Product[] = productsData;
 
-const getProducts = (): Product[] => {
-  return products;
+const getProducts = (): MinimalProduct[] => {
+  const minimalProducts: MinimalProduct[] = products.map(
+    ({ name, image, price }) => ({ name, image, price })
+  );
+  return minimalProducts;
 };
 
 const getProduct = (id: number): Product | undefined => {
