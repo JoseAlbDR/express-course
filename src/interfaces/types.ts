@@ -6,9 +6,15 @@ export interface Product {
   desc: string;
 }
 
-export type MinimalProduct = Omit<Product, "id" | "desc">;
+export type MinimalProduct = Omit<Product, "desc">;
 
 export interface People {
   id: number;
   name: string;
 }
+
+export type ProductParams = {
+  params: {
+    productId: string;
+  };
+};
