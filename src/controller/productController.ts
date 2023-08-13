@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ProductParams } from "../interfaces/types";
+import { errorHandler } from "../utils/error";
 import productService from "../services/productService";
 
 const getProducts = (_req: Request, res: Response) => {
@@ -17,8 +18,11 @@ const getProduct = (req: ProductParams, res: Response) => {
     });
   }
 
-  const product = productService.getProduct(+productId);
-  res.send({ status: "OK", data: product });
+  try {
+    const product = productService.getProduct(+productId);
+    res.send({ status: "OK", data: product });
+  } catch (error) {
+    errorHandler(error, res);
+  }
 };
-
 export default { getProducts, getProduct };
