@@ -6,7 +6,12 @@ import queryRouter from "./src/routes/query";
 import { logger } from "./logger";
 import { authorize } from "./authorize";
 import { people } from "./src/data/data";
-import { TypedRequestBody } from "./src/types/types";
+import {
+  TypedRequest,
+  TypedRequestBody,
+  TypedRequestParams,
+} from "./src/types/types";
+import { People } from "./src/interfaces/types";
 // import morgan from "morgan";
 
 const app = express();
@@ -62,6 +67,44 @@ app.post("/api/people", (req: TypedRequestBody<{ name: string }>, res) => {
 
   return res.status(201).json({ success: true, person: name });
 });
+
+app.put(
+  "/api/people/:id",
+  (req: TypedRequest<{ name: string }, { id: string }>, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    const person: People | undefined = people.find((p) => p.id === +id);
+
+    if (!person) {
+      return res.status(404).send({ success: false, msg: "Person not found" });
+    }
+
+    const newPeople = people.map((p) => {
+      if (p.id === +id) {
+        p.name = name;
+      }
+      return p;
+    });
+    return res.status(200).send({ success: true, data: { newPeople } });
+  }
+);
+
+app.delete(
+  "/api/people/:id",
+  (req: TypedRequestParams<{ id: string }>, res) => {
+    const { id } = req.params;
+    console.log(id);
+
+    const person: People | undefined = people.find((p) => p.id === +id);
+    if (!person) {
+      return res.status(404).send({ success: false, msg: "Person not found" });
+    }
+
+    const newPeople = people.filter((p) => p.id !== +id);
+    return res.status(200).send({ success: true, data: { newPeople } });
+  }
+);
 
 app.get("/", (_req: Request, res: Response) => {
   res.send("Home");
