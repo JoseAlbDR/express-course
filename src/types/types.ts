@@ -39,3 +39,12 @@ export interface User {
 export interface TypedRequestBody<T> extends Express.Request {
   body: T;
 }
+
+export interface TypedRequestParams<P> extends Express.Request {
+  params: P;
+}
+
+export interface TypedRequest<B, P> extends Express.Request {
+  body: B;
+  params: P;
+}
